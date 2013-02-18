@@ -1,0 +1,52 @@
+#
+# CORTEX
+#
+
+# Introduction
+---------------
+This software is an coredump to text crash_report generator for userland application.
+It's reading a coredump file and extract useful datas that it output in a ordened way.
+These files can be submitted as crash logs to authors of softwares.
+The main purpose is for embedded systems where storing a coredump file is not always possible
+and using gdb is to heavy.
+
+# How to build cortex
+-----------------------
+cortex is machine dependant, and cannot be cross-analyzing core. The purpose of this software is to be embedded
+on the target, thus removing the need to cross analyze.
+To build cortex follow these steps:
+- ./configure --host=<toolchainname> 
+- make
+- make install
+
+The --host is optional (required for cross compiling).
+The BFD_ARCH and BFD_MACH variables are optional. if you want to be able to disassemble hex opcodes.
+They correspond respectively to "enum bfd_architecture" and some defines in bfd.h (from binutils).
+If they are not provided at configure time, they will be guessed based on target toolchain arch.
+
+Ex:
+on a i386 machine to compile cortex
+- For an i386 target:
+	$> ./configure 
+- For a generic arm target:
+	$> ./configure --host=arm-none-linux-gnueabi
+- For a specific armv5te target:
+	$> ./configure --host=arm-none-linux-gnueabi BFD_MACH=bfd_mach_arm_5TE
+
+# Supported Architectures
+--------------------------
+cortex work for several processor architectures:
+- i386 / i486 / i586 / i686
+- x86_64
+- arm
+
+# license
+----------
+cortex is distributed under the term of the General Public License version 2 (GPLv2)
+See gpl-2.0.txt for the full license content
+
+
+# author
+----------
+Tristan Lelong <tristan.lelong@blunderer.org>
+

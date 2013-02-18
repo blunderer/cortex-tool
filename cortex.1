@@ -1,0 +1,208 @@
+.TH CORTEX 1 "NOVEMBER 29, 2012"
+.SH NAME
+cortex \- core to text converter
+.SH SYNOPSIS
+.B cortex
+.RI [ options ]
+.br
+.SH DESCRIPTION
+This manual page documents briefly the
+.B cortex
+commands.
+.PP
+\fBcortex\fP is a program that can be use for coredump automatic info extraction: it reads core ELF file, extract pertinent information and write them to a text file. This text file is lighter than a core dump but contains most required information for a developper to perform a bug analysis.
+.PP
+.B
+cortex
+will work only with ELF core dump. It supports several CPU architectures:
+.TP
+* i386 / i486 / i586 / i686
+.TP
+* x86_64
+.TP
+* powerpc32
+.TP
+* armel
+
+.PP
+.B cortex
+will read a coredump from
+.I stdin
+(or
+.I input file
+) and output useful information to
+.I stdout
+(or
+.I output file
+or
+.I output cmd
+).
+.br
+
+.SH OPTIONS
+This program follow the usual GNU command line syntax, with long
+options starting with two dashes (`-').
+A summary of options is included below.
+.TP
+.B \-i, \-\-input
+core dump input file.
+If this option is not present, stdin will be used.
+.br
+.TP
+.B \-o, \-\-output
+text output file.
+If this option is not present, stdout will be used.
+.br
+.TP
+.B \-e, \-\-exec
+cortex output command.
+Will call given command piping text output to stdin. If present,
+.I output
+option will be ignored
+.br
+.TP
+.B \-f, \-\-format
+cortex output format.
+Will select what to display and how to display it. See
+.br
+.TP
+.B \-c, \-\-context
+disassemble context size.
+Describe the number of bytes of disassembled context (default 40)
+.I
+Format
+section for more information.
+
+.br
+.TP
+.B \-h, \-\-help
+Show summary of options.
+.br
+.TP
+.B \-v, \-\-version
+Show program version and exit.
+.br
+.SH OUTPUT
+The text output contains some useful pieces of information about running process such as:
+.TP
+.B * Name
+.br
+The binary application filename
+.TP
+.B * Arguments
+.br
+All arguments used for launching the application
+.TP
+.B * uid/gid
+.br
+The user and group ID that of the crashed application
+.TP
+.B * utime / cutime / stime / cstime
+.br
+User / system times and cumulativ times
+.TP
+.B * State
+.br
+the state of app when coredump was generated: [R | S | D | T | Z | W]
+.TP
+.B * Threads
+.br
+The number of thread owned by application
+.TP
+.B * Signo
+.br
+The unix signal received and the PID of the thread that received it.
+.TP
+.B * Registers
+.br
+The content of CPU registers
+.TP
+.B * Source code
+.br
+The Hex code where crash occured (or asm if disassembly is possible);
+.TP
+.B * Stack
+.br
+The content of the last stack frame
+.TP
+.B * Call trace
+.br
+The current instruction pointer and return instruction pointers for each frames
+.TP
+.B * Auxiliary vector
+.br
+The auxiliary vector for this process.
+
+.SH FORMAT
+Custom format are:
+.TP
+.B * gen
+Generic information about process.
+.TP
+.B * reg
+CPU registers.
+.TP
+.B * cod
+Process instructions.
+.TP
+.B * cal
+Process call trace.
+.TP
+.B * aux
+Process auxiliary vector.
+.TP
+.B * sta
+Process current stack frame.
+.TP
+Predefined format are:
+.TP
+.B * def
+Default format. Equal to txt,gen,reg,cod,cal
+.TP
+.B * all
+Full info. Equal to txt,gen,reg,cod,cal,aux,sta
+.TP
+Output format are:
+.TP
+.B * txt
+Text output (default). Used to export a text file summary.
+.TP
+.B * bin
+Binary output. Used to export a stripped ELF file.
+.SH EXAMPLES
+.TP
+First, you gotta be sure to have the coredump feature compiled in your kernel:
+.br
+ELF_CORE should be set to 'y' in kernel .config
+.TP
+ulimit -c unlimited
+Ask coredump generation when application crashes with no size limit
+.br
+.TP
+cortex < core > cortex.out
+Will extract usefull information from core dump file core and output them to cortex.out
+.br
+.TP
+cortex -f def < core > cortex.out
+Will do exactly the same as the previous example.
+.br
+.TP
+cortex -f bin,cod < core > cortex.out
+Will extract the code segment that contains the instruction where the software crashed.
+.br
+.TP
+echo "|cortex >> /var/log/cortex.log" > /proc/sys/kernel/core_pattern
+It is possible to automatically generate cortex output files when any application crashes thanks to the linux kernel:
+.br
+You will generate text output in the /var/log/cortex.log file each time a coredump is generated
+.TP
+echo "|cortex -e \\"gzip > /var/log/%e_%p.cortex\\"" > /proc/sys/kernel/core_pattern
+You can also generate compressed cortex file:
+.br
+This will create a new file named /var/log/<app>_<pid>.cortex that is gzipped and that contains the crash dump.
+
+.SH AUTHOR
+.B cortex
+was written by Tristan Lelong.
+.PP
+This manual page was written by Tristan Lelong <tristan.lelong@blunderer.org>
