@@ -150,8 +150,12 @@ static void cortex_output_write_call_trace(struct cortex_proc_info *info,
 		return;
 	}
 
-	if (cortex_arch_opss.unwind_init)
+	if (cortex_arch_opss.unwind_init) {
 		priv_data = cortex_arch_opss.unwind_init(info, &frame);
+	} else {
+		fprintf(output, "Unsupported\n");
+		return;
+	}
 
 	if (cortex_arch_opss.unwind_next) {
 		do {
