@@ -116,8 +116,8 @@ static void cortex_output_write_stack_frame(struct cortex_proc_info *info,
 
 	stackframe = info->stack->d_buf;
 
-	if (cortex_arch_opss.unwind_init)
-		priv_data = cortex_arch_opss.unwind_init(info, &frame);
+	if (cortex_arch_ops.unwind_init)
+		priv_data = cortex_arch_ops.unwind_init(info, &frame);
 
 	if (frame.bp == 0)
 		fprintf(output, "  <empty>\n");
@@ -131,8 +131,8 @@ static void cortex_output_write_stack_frame(struct cortex_proc_info *info,
 		}
 	}
 
-	if (cortex_arch_opss.unwind_exit)
-		cortex_arch_opss.unwind_exit(info, priv_data);
+	if (cortex_arch_ops.unwind_exit)
+		cortex_arch_ops.unwind_exit(info, priv_data);
 
 	return;
 }
@@ -150,14 +150,14 @@ static void cortex_output_write_call_trace(struct cortex_proc_info *info,
 		return;
 	}
 
-	if (cortex_arch_opss.unwind_init) {
-		priv_data = cortex_arch_opss.unwind_init(info, &frame);
+	if (cortex_arch_ops.unwind_init) {
+		priv_data = cortex_arch_ops.unwind_init(info, &frame);
 	} else {
 		fprintf(output, "Unsupported\n");
 		return;
 	}
 
-	if (cortex_arch_opss.unwind_next) {
+	if (cortex_arch_ops.unwind_next) {
 		do {
 			int next;
 			int frame_id = 0;
@@ -171,7 +171,7 @@ static void cortex_output_write_call_trace(struct cortex_proc_info *info,
 			}
 
 			next =
-			    cortex_arch_opss.unwind_next(info, &frame,
+			    cortex_arch_ops.unwind_next(info, &frame,
 							 priv_data);
 
 			if (!next) {
@@ -187,8 +187,8 @@ static void cortex_output_write_call_trace(struct cortex_proc_info *info,
 		} while (1);
 	}
 
-	if (cortex_arch_opss.unwind_exit)
-		cortex_arch_opss.unwind_exit(info, priv_data);
+	if (cortex_arch_ops.unwind_exit)
+		cortex_arch_ops.unwind_exit(info, priv_data);
 
 	return;
 }

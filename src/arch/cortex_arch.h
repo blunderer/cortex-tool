@@ -30,7 +30,7 @@
 
 #define REG_NAME_SZ	16
 
-extern struct cortex_arch_ops cortex_arch_opss;
+extern struct cortex_arch_ops cortex_arch_ops;
 
 struct cortex_cpu_regs {
 	char name[REG_NAME_SZ];

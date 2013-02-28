@@ -51,7 +51,7 @@
  * This section describe all architecture dependant functions.<br>
  * These functions are implemented for each arch in a file called cortex_<arch>.c<br>
  * when configuring cortex, the --host option is used to choose the targeted architecture.<br>
- * The struct cortex_arch_ops cortex_arch_opss variable contains pointer to all
+ * The struct cortex_arch_ops cortex_arch_ops variable contains pointer to all
  * those functions.
  * list:
  * - \ref int fill_regs(struct cortex_proc_info *info, struct pt_regs *pr_regs)

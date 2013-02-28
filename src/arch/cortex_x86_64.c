@@ -152,7 +152,7 @@ static int cortex_x86_64_get_word_size(void)
 	return 8;
 }
 
-struct cortex_arch_ops cortex_arch_opss = {
+struct cortex_arch_ops cortex_arch_ops = {
 	.fill_regs = cortex_x86_64_fill_regs,
 	.get_pc = cortex_x86_64_get_pc,
 	.get_sp = cortex_x86_64_get_sp,

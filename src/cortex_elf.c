@@ -455,17 +455,17 @@ struct cortex_proc_info *cortex_elf_parse(struct cortex_elf *core,
 	info->elf = core;
 
 	pr_regs = (struct pt_regs *)info->threads[0]->pr_reg;
-	info->word_size = cortex_arch_opss.get_word_size();
-	info->cpu_regs_nr = cortex_arch_opss.fill_regs(info, pr_regs);
+	info->word_size = cortex_arch_ops.get_word_size();
+	info->cpu_regs_nr = cortex_arch_ops.fill_regs(info, pr_regs);
 
 	/* Then look for the segment that contains
 	   the instruction pointer */
-	info->pc = cortex_arch_opss.get_pc(info->cpu_regs);
+	info->pc = cortex_arch_ops.get_pc(info->cpu_regs);
 	info->pc_segm = cortex_find_segment_vaddr(phdr, ehdr, info->pc);
 	info->code = cortex_load_segment(core, ehdr, info->pc_segm);
 
 	/* Finally, load the stack segment */
-	info->sp = cortex_arch_opss.get_sp(info->cpu_regs);
+	info->sp = cortex_arch_ops.get_sp(info->cpu_regs);
 	info->sp_segm = cortex_find_segment_vaddr(phdr, ehdr, info->sp);
 	info->stack = cortex_load_segment(core, ehdr, info->sp_segm);
 
