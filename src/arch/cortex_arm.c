@@ -24,6 +24,12 @@
 #include "cortex.h"
 #include "arch/cortex_arch.h"
 
+#ifdef LINUX64
+#define CORTEX_WORD_SIZE 8
+#else
+#define CORTEX_WORD_SIZE 4
+#endif
+
 enum cortex_reg_id {
 	reg_id_r0 = 0,
 	reg_id_r1,
@@ -46,24 +52,24 @@ enum cortex_reg_id {
 };
 
 static struct cortex_cpu_regs cortex_arm_cpu_regs[] = {
-	{.name = "r0",.size = 4},
-	{.name = "r1",.size = 4},
-	{.name = "r2",.size = 4},
-	{.name = "r3",.size = 4},
-	{.name = "r4",.size = 4},
-	{.name = "r5",.size = 4},
-	{.name = "r6",.size = 4},
-	{.name = "r7",.size = 4},
-	{.name = "r8",.size = 4},
-	{.name = "r9",.size = 4},
-	{.name = "r10",.size = 4},
-	{.name = "fp",.size = 4},
-	{.name = "ip",.size = 4},
-	{.name = "sp",.size = 4},
-	{.name = "lr",.size = 4},
-	{.name = "pc",.size = 4},
-	{.name = "cpsr",.size = 4},
-	{.name = "orig_r0",.size = 4},
+	{.name = "r0",.size = CORTEX_WORD_SIZE},
+	{.name = "r1",.size = CORTEX_WORD_SIZE},
+	{.name = "r2",.size = CORTEX_WORD_SIZE},
+	{.name = "r3",.size = CORTEX_WORD_SIZE},
+	{.name = "r4",.size = CORTEX_WORD_SIZE},
+	{.name = "r5",.size = CORTEX_WORD_SIZE},
+	{.name = "r6",.size = CORTEX_WORD_SIZE},
+	{.name = "r7",.size = CORTEX_WORD_SIZE},
+	{.name = "r8",.size = CORTEX_WORD_SIZE},
+	{.name = "r9",.size = CORTEX_WORD_SIZE},
+	{.name = "r10",.size = CORTEX_WORD_SIZE},
+	{.name = "fp",.size = CORTEX_WORD_SIZE},
+	{.name = "ip",.size = CORTEX_WORD_SIZE},
+	{.name = "sp",.size = CORTEX_WORD_SIZE},
+	{.name = "lr",.size = CORTEX_WORD_SIZE},
+	{.name = "pc",.size = CORTEX_WORD_SIZE},
+	{.name = "cpsr",.size = CORTEX_WORD_SIZE},
+	{.name = "orig_r0",.size = CORTEX_WORD_SIZE},
 };
 
 static int cortex_arm_fill_regs(struct cortex_proc_info *info,
@@ -162,7 +168,7 @@ static void cortex_arm_unwind_exit(struct cortex_proc_info *info, void *data)
 
 static int cortex_arm_get_word_size(void)
 {
-	return 4;
+	return CORTEX_WORD_SIZE;
 }
 
 struct cortex_arch_ops cortex_arch_ops = {

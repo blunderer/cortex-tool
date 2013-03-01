@@ -1,7 +1,7 @@
-/** \file cortex_i686.c
+/** \file cortex_powerpc.c
  * \brief cortex powerpc specific functions
  * \author Tristan Lelong <tristan.lelong@blunderer.org>
- * \date 2011 06 27
+ * \date 2013 03 01 
  *
  * This segment is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,9 +25,9 @@
 #include "arch/cortex_arch.h"
 
 #ifdef LINUX64
-static int cortex_word_size = 8;
+#define CORTEX_WORD_SIZE 8
 #else
-static int cortex_word_size = 4;
+#define CORTEX_WORD_SIZE 4
 #endif
 
 enum cortex_reg_id {
@@ -82,54 +82,54 @@ enum cortex_reg_id {
 };
 
 static struct cortex_cpu_regs cortex_powerpc_cpu_regs[] = {
-	{.name = "gpr0",.size = 4,},
-	{.name = "gpr1",.size = 4,},
-	{.name = "gpr2",.size = 4,},
-	{.name = "gpr3",.size = 4,},
-	{.name = "gpr4",.size = 4,},
-	{.name = "gpr5",.size = 4,},
-	{.name = "gpr6",.size = 4,},
-	{.name = "gpr7",.size = 4,},
-	{.name = "gpr8",.size = 4,},
-	{.name = "gpr9",.size = 4,},
-	{.name = "gpr10",.size = 4,},
-	{.name = "gpr11",.size = 4,},
-	{.name = "gpr12",.size = 4,},
-	{.name = "gpr13",.size = 4,},
-	{.name = "gpr14",.size = 4,},
-	{.name = "gpr15",.size = 4,},
-	{.name = "gpr16",.size = 4,},
-	{.name = "gpr17",.size = 4,},
-	{.name = "gpr18",.size = 4,},
-	{.name = "gpr19",.size = 4,},
-	{.name = "gpr20",.size = 4,},
-	{.name = "gpr21",.size = 4,},
-	{.name = "gpr22",.size = 4,},
-	{.name = "gpr23",.size = 4,},
-	{.name = "gpr24",.size = 4,},
-	{.name = "gpr25",.size = 4,},
-	{.name = "gpr26",.size = 4,},
-	{.name = "gpr27",.size = 4,},
-	{.name = "gpr28",.size = 4,},
-	{.name = "gpr29",.size = 4,},
-	{.name = "gpr30",.size = 4,},
-	{.name = "gpr31",.size = 4,},
-	{.name = "nip",.size = 4,},
-	{.name = "msr",.size = 4,},
-	{.name = "orig_gpr3",.size = 4,},
-	{.name = "ctr",.size = 4,},
-	{.name = "link",.size = 4,},
-	{.name = "xer",.size = 4,},
-	{.name = "ccr",.size = 4,},
-#ifdef LINUX64
-	{.name = "softe",.size = 4,},
+	{.name = "gpr0",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr1",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr2",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr3",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr4",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr5",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr6",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr7",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr8",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr9",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr10",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr11",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr12",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr13",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr14",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr15",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr16",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr17",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr18",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr19",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr20",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr21",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr22",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr23",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr24",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr25",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr26",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr27",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr28",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr29",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr30",.size = CORTEX_WORD_SIZE,},
+	{.name = "gpr31",.size = CORTEX_WORD_SIZE,},
+	{.name = "nip",.size = CORTEX_WORD_SIZE,},
+	{.name = "msr",.size = CORTEX_WORD_SIZE,},
+	{.name = "orig_gpr3",.size = CORTEX_WORD_SIZE,},
+	{.name = "ctr",.size = CORTEX_WORD_SIZE,},
+	{.name = "link",.size = CORTEX_WORD_SIZE,},
+	{.name = "xer",.size = CORTEX_WORD_SIZE,},
+	{.name = "ccr",.size = CORTEX_WORD_SIZE,},
+#ifdef CORTEX_WORD_SIZEINUX64
+	{.name = "softe",.size = CORTEX_WORD_SIZE,},
 #else
-	{.name = "mq",.size = 4,},
+	{.name = "mq",.size = CORTEX_WORD_SIZE,},
 #endif
-	{.name = "trap",.size = 4,},
-	{.name = "dar",.size = 4,},
-	{.name = "dsisr",.size = 4,},
-	{.name = "result",.size = 4,},
+	{.name = "trap",.size = CORTEX_WORD_SIZE,},
+	{.name = "dar",.size = CORTEX_WORD_SIZE,},
+	{.name = "dsisr",.size = CORTEX_WORD_SIZE,},
+	{.name = "result",.size = CORTEX_WORD_SIZE,},
 };
 
 static int cortex_powerpc_fill_regs(struct cortex_proc_info *info,
@@ -201,7 +201,7 @@ static long cortex_powerpc_get_sp(struct cortex_cpu_regs *cpu_regs)
 
 static int cortex_powerpc_get_word_size(void)
 {
-	return cortex_word_size;
+	return CORTEX_WORD_SIZE;
 }
 
 struct cortex_arch_ops cortex_arch_ops = {
