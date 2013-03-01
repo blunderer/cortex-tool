@@ -21,9 +21,25 @@ CFLAGS_powerpc64	= -DLINUX64 -DMACHINE=EM_PPC64
 BFD_ARCH_powerpc64	= bfd_arch_powerpc
 BFD_MACH_powerpc64	= bfd_mach_ppc64
 
+# MIPS Architecture
+ARCH_mips		= mips
+CFLAGS_mips		= -DLINUX32 -DMACHINE=EM_MIPS
+BFD_ARCH_mips		= bfd_arch_mips
+BFD_MACH_mips		= bfd_mach_r6000
+
+ARCH_mips64		= mips64 
+CFLAGS_mips64		= -DLINUX64 -DMACHINE=EM_MIPS
+BFD_ARCH_mips64		= bfd_arch_mips
+BFD_MACH_mips64		= bfd_mach_r4000
+
 # ARM Architecture
 ARCH_arm		= arm
 CFLAGS_arm		= -DLINUX32 -DMACHINE=EM_ARM
 BFD_ARCH_arm		= bfd_arch_arm
 BFD_MACH_arm		= bfd_mach_arm_unknown
+
+ARCH_arm64		= arm
+CFLAGS_arm64		= -DLINUX64 -DMACHINE=EM_ARM
+BFD_ARCH_arm64		= bfd_arch_arm
+BFD_MACH_arm64		= bfd_mach_arm_unknown
 

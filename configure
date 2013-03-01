@@ -605,6 +605,7 @@ ac_includes_default="\
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
 cpu_arch
+libopcode
 target_os
 target_vendor
 target_cpu
@@ -617,6 +618,7 @@ build_os
 build_vendor
 build_cpu
 build
+CFLAGS_ARCH
 BFD_ARCH
 BFD_MACH
 EGREP
@@ -683,7 +685,8 @@ LIBS
 CPPFLAGS
 CPP
 BFD_MACH
-BFD_ARCH'
+BFD_ARCH
+CFLAGS_ARCH'
 
 
 # Initialize some variables set by options.
@@ -1309,6 +1312,8 @@ Some influential environment variables:
               (guessed if empty)
   BFD_ARCH    bfd_arch used when disassembling code. See bfd.h for a list.
               (guessed if empty)
+  CFLAGS_ARCH cflags used by cortex. -DLINUX32 or -DLINUX64, and
+              -DMACHINE=EM_xxx. (guessed if empty)
 
 Use these variables to override the choices made by `configure' or to help
 it to find libraries and programs with nonstandard names/locations.
@@ -3395,15 +3400,17 @@ if test "x$ac_cv_header_dis_asm_h" = xyes; then :
   cat >>confdefs.h <<_ACEOF
 #define HAVE_DIS_ASM_H 1
 _ACEOF
-
+ libopcode=-lopcode
 else
-  as_fn_error 1 "\"missing binutils development files.\"" "$LINENO" 5
+  { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: \"missing binutils development files: disable disassemble support.\"" >&5
+$as_echo "$as_me: WARNING: \"missing binutils development files: disable disassemble support.\"" >&2;}
 fi
 
 done
 
 
-# set system type
+# customize system type
+
 
 
 
@@ -3548,24 +3555,48 @@ test -n "$target_alias" &&
     NONENONEs,x,x, &&
   program_prefix=${target_alias}-
 case $host in #(
-  x86_64-*) :
-    cpu_arch=x86_64 ;; #(
-  i?86-*) :
-    cpu_arch=i386 ;; #(
+  alpha*-*) :
+    cpu_arch=alpha ;; #(
   arm*-*) :
     cpu_arch=arm ;; #(
-  ppc-*) :
+  avr-*) :
+    cpu_arch=avr32 ;; #(
+  bfin*-*) :
+    cpu_arch=blackfin ;; #(
+  h8300-*) :
+    cpu_arch=h8300 ;; #(
+  i?86-*) :
+    cpu_arch=i386 ;; #(
+  ia64*-*) :
+    cpu_arch=ia64 ;; #(
+  m32r*-*) :
+    cpu_arch=m32r ;; #(
+  m68ki*-*) :
+    cpu_arch=m68k ;; #(
+  microblaze*-*) :
+    cpu_arch=microblaze ;; #(
+  mips*-*) :
+    cpu_arch=mips ;; #(
+  powerpc*-*) :
     cpu_arch=powerpc ;; #(
-  ppc64-*) :
-    cpu_arch=powerpc64 ;; #(
-  powerpc-*) :
-    cpu_arch=powerpc ;; #(
-  powerpc64-*) :
-    cpu_arch=powerpc64 ;; #(
+  score*-*) :
+    cpu_arch=score ;; #(
+  sparc*-*) :
+    cpu_arch=sparc ;; #(
+  tic6x-*) :
+    cpu_arch=c6x ;; #(
+  tile*-*) :
+    cpu_arch=tile ;; #(
+  x86_64-*) :
+    cpu_arch=x86_64 ;; #(
+  xtensa*-*) :
+    cpu_arch=xtensa ;; #(
   *) :
     cpu_arch=unknown
  ;;
 esac
+
+
 
 
 # Build output

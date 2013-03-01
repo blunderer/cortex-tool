@@ -27,7 +27,7 @@ CC		= @CC@
 INSTALL		= @INSTALL@
 MKDIR		= @MKDIR@ -p
 
-LIBS		= @LIBS@ -lopcodes
+LIBS		= @libopcode@
 CFLAGS		+= @CFLAGS@
 LDFLAGS 	+= @LDFLAGS@
 CPPFLAGS	+= @CPPFLAGS@

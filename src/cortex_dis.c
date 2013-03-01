@@ -18,13 +18,16 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#ifdef HAVE_DIS_ASM
 #include <dis-asm.h>
+
 #include <stdarg.h>
 
 #include "cortex.h"
 
 static int cortex_dis_print_mute = 0;
 static int cortex_dis_print_offset = 0;
+
 static int (*print_insn_func) (bfd_vma, struct disassemble_info *) = NULL;
 
 static void cortex_dis_fprintf_reset(void)
@@ -164,3 +167,14 @@ void cortex_dis_process_buffer(FILE * output, unsigned char *buffer,
 		instr_ptr += size;
 	}
 }
+#else /* HAVE_DIS_ASM */
+#include <stdio.h>
+#include "cortex.h"
+
+void cortex_dis_process_buffer(FILE * output, unsigned char *buffer,
+			       unsigned long len, unsigned long instr_context,
+			       ElfN_Addr base, ElfN_Addr pc)
+{
+	fprintf(output, "Unsupported\n");
+}
+#endif /* HAVE_DIS_ASM */

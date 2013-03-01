@@ -23,8 +23,11 @@ The --host is optional (required for cross compiling).
 The BFD_ARCH and BFD_MACH variables are optional. if you want to be able to disassemble hex opcodes.
 They correspond respectively to "enum bfd_architecture" and some defines in bfd.h (from binutils).
 If they are not provided at configure time, they will be guessed based on target toolchain arch.
+The CFLAGS_ARCH is also optional. It define if we are using a 32 or 64 bits arch and also define the ELF e_type.
 
-Ex:
+Usually, the arch.mk and configure should guess correct values for those variables, but on some specific targets, you might need to set it at configure time.
+
+Examples on how to fully customize cortex for your target architecture.
 on a i386 machine to compile cortex
 - For an i386 target:
 	$> ./configure 
@@ -32,6 +35,8 @@ on a i386 machine to compile cortex
 	$> ./configure --host=arm-none-linux-gnueabi
 - For a specific armv5te target:
 	$> ./configure --host=arm-none-linux-gnueabi BFD_MACH=bfd_mach_arm_5TE
+- For a specific mips target:
+	$> ./configure --host=mips-none-linux BFD_MACH=bfd_mach_mips3000 CFLAGS_ARCH="-DLINUX32 -DMACHINE=EM_MIPS_RS3_LE"
 
 # Supported Architectures
 --------------------------
