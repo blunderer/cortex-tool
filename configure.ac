@@ -12,7 +12,7 @@ AC_CHECK_TOOL(INSTALL, install)
 # Checks for header files.
 AC_CHECK_HEADERS([fcntl.h stdlib.h string.h unistd.h sys/procfs.h asm/ptrace.h sys/stat.h], [], [AC_MSG_ERROR(["some header are missing."], [1])])
 AC_CHECK_HEADERS([elf.h], [], [AC_MSG_ERROR(["missing libc development files."], [1])])
-AC_CHECK_HEADERS([dis-asm.h], [libopcode=-lopcode], [AC_MSG_WARN(["missing binutils development files: disable disassemble support."], [1])])
+AC_CHECK_HEADERS([dis-asm.h], [libopcodes=-lopcodes], [AC_MSG_WARN(["missing binutils development files: disable disassemble support."], [1])])
 
 # customize system type
 AC_ARG_VAR([BFD_MACH], [bfd_mach used when disassembling code. See bfd.h for a list. (guessed if empty)])
@@ -44,7 +44,7 @@ AS_CASE([$host],
 		[cpu_arch=unknown]
 )
 
-AC_SUBST([libopcode])
+AC_SUBST([libopcodes])
 AC_SUBST([cpu_arch])
 
 # Build output
