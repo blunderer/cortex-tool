@@ -45,7 +45,7 @@ static void cortex_usage(char *argv0)
 	       "\t-i, --input\n\t\tcoredump input file. "
 	       "If this option is not present, stdin will be used.\n"
 	       "\t-o, --output\n\t\tcoredump input file. "
-	       "If this option is not present, stdin will be used.\n"
+	       "If this option is not present, stdout will be used.\n"
 	       "\t-e, --exec\n\t\tcommand. After the oops is generated, "
 	       "call <command> with oops as stdin. incompatible with -o.\n"
 	       "\t-f, --format\n\t\tComma separated list of section to display:\n"
